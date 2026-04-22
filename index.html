@@ -38,6 +38,18 @@
   a { color: inherit; text-decoration: none; }
   ::selection { background: var(--accent-soft); color: var(--ink); }
 
+  /* Subtle paper grain across the whole site */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    mix-blend-mode: multiply;
+  }
+
   /* Type system */
   .display {
     font-family: 'Fraunces', Georgia, serif;
@@ -119,23 +131,6 @@
     color: var(--ink-2);
   }
 
-  /* Layout primitives */
-  .wrap {
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: 0 40px;
-  }
-  .wrap-narrow {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 0 40px;
-  }
-  hr.rule {
-    border: 0;
-    border-top: 1px solid var(--rule);
-    margin: 0;
-  }
-
   /* CTAs */
   .btn {
     display: inline-flex;
@@ -149,6 +144,7 @@
     transition: all .18s ease;
     border: 1px solid transparent;
     letter-spacing: 0.005em;
+    cursor: pointer;
   }
   .btn-primary {
     background: var(--ink);
@@ -166,8 +162,18 @@
   .btn-ghost:hover {
     border-color: var(--ink);
   }
+  .btn-accent {
+    background: var(--accent);
+    color: var(--paper);
+  }
+  .btn-accent:hover {
+    background: var(--accent-soft);
+    color: var(--ink);
+  }
   .btn .arrow { transition: transform .2s ease; }
   .btn:hover .arrow { transform: translateX(3px); }
+
+  hr.rule { border: 0; border-top: 1px solid var(--rule); margin: 0; }
 
   /* ============ NAV ============ */
   .nav {
@@ -205,7 +211,7 @@
   .nav-links {
     display: flex;
     align-items: center;
-    gap: 32px;
+    gap: 28px;
   }
   .nav-links a {
     font-size: 14px;
@@ -262,9 +268,45 @@
     pointer-events: none;
   }
 
+  /* ============ STATS BAND ============ */
+  .stats-band {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 50px 0;
+  }
+  .stats-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    text-align: left;
+  }
+  .stat .num {
+    font-family: 'Fraunces', Georgia, serif;
+    font-variation-settings: 'opsz' 144;
+    font-weight: 400;
+    font-size: 64px;
+    line-height: 1;
+    color: var(--accent-soft);
+    letter-spacing: -0.02em;
+  }
+  .stat .num em {
+    font-style: italic;
+    font-weight: 400;
+  }
+  .stat .label {
+    margin-top: 10px;
+    font-size: 13px;
+    color: rgba(241,234,220,0.7);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
   /* ============ VENTURES STRIP ============ */
   .ventures-strip {
-    padding: 60px 0;
+    padding: 50px 0;
     background: var(--paper-2);
     border-bottom: 1px solid var(--rule);
   }
@@ -274,17 +316,15 @@
     padding: 0 40px;
     display: flex;
     align-items: center;
-    gap: 60px;
+    gap: 40px;
     flex-wrap: wrap;
     justify-content: space-between;
   }
-  .ventures-strip .label {
-    flex-shrink: 0;
-  }
+  .ventures-strip .label { flex-shrink: 0; }
   .ventures-strip .logos {
     display: flex;
     align-items: center;
-    gap: 44px;
+    gap: 38px;
     flex-wrap: wrap;
     flex: 1;
     justify-content: flex-end;
@@ -293,7 +333,7 @@
     font-family: 'Fraunces', Georgia, serif;
     font-style: italic;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 19px;
     color: var(--ink-2);
     opacity: 0.7;
     transition: opacity .2s;
@@ -302,7 +342,7 @@
 
   /* ============ STORY ============ */
   section.story {
-    padding: 140px 0 120px;
+    padding: 130px 0 110px;
   }
   .story-inner {
     display: grid;
@@ -352,12 +392,68 @@
   .story-sig .signature { color: var(--accent); }
   .story-sig .smallcaps { color: var(--ink-3); }
 
-  /* ============ FRAMEWORKS ============ */
-  section.frameworks {
-    padding: 120px 0 140px;
+  /* ============ GALLERY ============ */
+  section.gallery {
+    padding: 110px 0;
     background: var(--paper-2);
     border-top: 1px solid var(--rule);
     border-bottom: 1px solid var(--rule);
+  }
+  .gallery-header {
+    max-width: 1180px;
+    margin: 0 auto 60px;
+    padding: 0 40px;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .gallery-header .h2 { margin-top: 12px; max-width: 600px; }
+  .gallery-header .meta {
+    text-align: right;
+    color: var(--ink-3);
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    max-width: 280px;
+  }
+  .gallery-grid {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: 130px;
+    gap: 20px;
+  }
+  .tile {
+    background-size: cover;
+    background-position: center;
+    border-radius: 4px;
+    box-shadow: var(--shadow);
+    position: relative;
+    transition: transform .35s ease;
+  }
+  .tile:hover { transform: translateY(-4px); }
+  .tile::after {
+    content: attr(data-cap);
+    position: absolute;
+    left: 16px; bottom: 14px;
+    color: rgba(241,234,220,0.95);
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic;
+    font-size: 16px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  }
+  .tile.t1 { grid-column: span 5; grid-row: span 4; background-image: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.35) 100%), url('assets/AAAAAA.jpg'); }
+  .tile.t2 { grid-column: span 4; grid-row: span 3; background-image: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.35) 100%), url('assets/AAAA.jpg'); background-position: center 20%; }
+  .tile.t3 { grid-column: span 3; grid-row: span 3; background-image: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.35) 100%), url('assets/C.jpg'); }
+  .tile.t4 { grid-column: span 4; grid-row: span 4; background-image: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.35) 100%), url('assets/AAA.jpg'); background-position: center 25%; }
+  .tile.t5 { grid-column: span 3; grid-row: span 4; background-image: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.35) 100%), url('assets/B.jpg'); background-position: center 30%; }
+
+  /* ============ FRAMEWORKS ============ */
+  section.frameworks {
+    padding: 130px 0;
   }
   .frameworks-header {
     max-width: 760px;
@@ -398,9 +494,151 @@
     max-width: 580px;
   }
 
+  /* ============ TIMELINE ============ */
+  section.timeline {
+    padding: 130px 0;
+    background: var(--paper-2);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .timeline-header {
+    max-width: 760px;
+    margin: 0 auto 70px;
+    padding: 0 40px;
+    text-align: center;
+  }
+  .timeline-header .h2 { margin-top: 14px; }
+  .timeline-header .lede { margin-top: 22px; }
+  .timeline-list {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+  .tl-item {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 40px;
+    padding: 36px 0;
+    border-top: 1px solid var(--rule);
+    align-items: baseline;
+  }
+  .tl-item:last-child { border-bottom: 1px solid var(--rule); }
+  .tl-year {
+    font-family: 'Fraunces', Georgia, serif;
+    font-variation-settings: 'opsz' 64;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 30px;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .tl-content h4 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 1.25;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .tl-content p {
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--ink-2);
+    max-width: 580px;
+  }
+
+  /* ============ VENTURES (rich grid) ============ */
+  section.ventures {
+    padding: 130px 0;
+  }
+  .ventures-header {
+    max-width: 1180px;
+    margin: 0 auto 70px;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: end;
+  }
+  .ventures-header .h2 { margin-top: 14px; }
+  .ventures-header .lede { font-size: 19px; max-width: 480px; }
+  .ventures-grid {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 28px;
+  }
+  .vcard {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 32px 28px;
+    transition: border-color .2s, transform .2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 240px;
+  }
+  .vcard:hover {
+    border-color: var(--ink);
+    transform: translateY(-3px);
+  }
+  .vcard .vname {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 500;
+    font-size: 26px;
+    color: var(--ink);
+    line-height: 1.1;
+    letter-spacing: -0.012em;
+  }
+  .vcard .vname em { font-style: italic; color: var(--accent); }
+  .vcard .vcat {
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--ink-3);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .vcard .vdesc {
+    margin-top: 16px;
+    font-size: 15px;
+    color: var(--ink-2);
+    line-height: 1.55;
+    flex: 1;
+  }
+  .vcard .vmeta {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .vcard .vmeta .live {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--accent);
+  }
+  .vcard .vmeta .live::before {
+    content: '';
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
   /* ============ THE BOOK ============ */
   section.book {
-    padding: 140px 0;
+    padding: 130px 0;
+    background: var(--paper-2);
+    border-top: 1px solid var(--rule);
     border-bottom: 1px solid var(--rule);
   }
   .book-inner {
@@ -463,10 +701,45 @@
   .book-text .h2 { margin-top: 12px; }
   .book-text .lede { margin-top: 24px; }
   .book-text .btn { margin-top: 32px; }
+  .book-text .toc {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+  }
+  .book-text .toc-label {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 16px;
+  }
+  .book-text .toc ol {
+    list-style: none;
+    counter-reset: chapter;
+  }
+  .book-text .toc li {
+    counter-increment: chapter;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule-soft);
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 18px;
+    color: var(--ink);
+  }
+  .book-text .toc li::before {
+    content: counter(chapter, decimal-leading-zero);
+    font-style: italic;
+    color: var(--accent);
+    font-size: 15px;
+    width: 30px;
+    flex-shrink: 0;
+  }
 
   /* ============ MENTORSHIP ============ */
   section.mentorship {
-    padding: 140px 0;
+    padding: 130px 0;
     background: var(--ink);
     color: var(--paper);
   }
@@ -517,11 +790,11 @@
     gap: 18px;
     flex-wrap: wrap;
   }
-  .mentorship-cta .btn-primary {
+  .mentorship-cta .btn-accent {
     background: var(--accent);
     color: var(--ink);
   }
-  .mentorship-cta .btn-primary:hover {
+  .mentorship-cta .btn-accent:hover {
     background: var(--accent-soft);
   }
   .mentorship-cta .meta {
@@ -529,54 +802,231 @@
     color: rgba(241,234,220,0.55);
   }
 
-  /* ============ PULL QUOTE ============ */
-  section.quote-band {
-    padding: 140px 0;
+  /* ============ TALKS & WRITING ============ */
+  section.talks {
+    padding: 130px 0;
+    background: var(--paper);
     border-bottom: 1px solid var(--rule);
   }
-  .quote-band-inner {
+  .talks-header {
+    max-width: 1180px;
+    margin: 0 auto 60px;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: end;
+  }
+  .talks-header .h2 { margin-top: 14px; }
+  .talks-header .lede { font-size: 19px; max-width: 480px; }
+  .talks-grid {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+  }
+  .talks-col h3 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 500;
+    font-size: 22px;
+    color: var(--ink);
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 18px;
+  }
+  .talks-list {
+    list-style: none;
+  }
+  .talks-list li {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule-soft);
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 20px;
+    align-items: baseline;
+  }
+  .talks-list li:last-child { border-bottom: none; }
+  .talks-list .y {
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--accent);
+  }
+  .talks-list .t {
+    font-size: 16px;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  .talks-list .t .where {
+    display: block;
+    font-size: 13px;
+    color: var(--ink-3);
+    margin-top: 2px;
+  }
+  .talks-list .arr {
+    font-size: 14px;
+    color: var(--ink-3);
+    transition: transform .2s, color .2s;
+  }
+  .talks-list li:hover .arr { color: var(--accent); transform: translateX(3px); }
+
+  /* ============ READING LIST ============ */
+  section.reading {
+    padding: 130px 0;
+    background: var(--paper-2);
+    border-bottom: 1px solid var(--rule);
+  }
+  .reading-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 60px;
+    align-items: start;
+  }
+  .reading-inner .h2 { margin-top: 14px; }
+  .reading-inner .lede { margin-top: 22px; }
+  .reading-list {
+    list-style: none;
+  }
+  .reading-list li {
+    padding: 22px 0;
+    border-top: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    align-items: baseline;
+  }
+  .reading-list li:last-child { border-bottom: 1px solid var(--rule); }
+  .reading-list .book-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .reading-list .author {
+    display: block;
+    font-style: normal;
+    font-size: 14px;
+    color: var(--ink-3);
+    margin-top: 4px;
+    letter-spacing: 0.04em;
+  }
+  .reading-list .why {
+    font-size: 14px;
+    color: var(--ink-2);
+    text-align: right;
+    max-width: 280px;
+    line-height: 1.5;
+  }
+
+  /* ============ TESTIMONIALS ============ */
+  section.testimonials {
+    padding: 130px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .testimonials-header {
+    max-width: 760px;
+    margin: 0 auto 70px;
+    padding: 0 40px;
+    text-align: center;
+  }
+  .testimonials-header .h2 { margin-top: 14px; }
+  .testimonials-grid {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+  .testi {
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 40px 36px;
+    display: flex;
+    flex-direction: column;
+  }
+  .testi .qmark {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 56px;
+    line-height: 0.4;
+    color: var(--accent);
+    margin-bottom: 22px;
+  }
+  .testi blockquote {
+    font-family: 'Fraunces', Georgia, serif;
+    font-variation-settings: 'opsz' 48;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.32;
+    color: var(--ink);
+    flex: 1;
+  }
+  .testi blockquote em { font-style: italic; color: var(--accent); }
+  .testi .attr {
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px solid var(--rule);
+    font-size: 14px;
+    color: var(--ink-3);
+  }
+  .testi .attr strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* ============ NEWSLETTER ============ */
+  section.newsletter {
+    padding: 110px 0;
+    background: var(--paper-2);
+    border-bottom: 1px solid var(--rule);
+  }
+  .nl-inner {
     max-width: 880px;
     margin: 0 auto;
     padding: 0 40px;
     text-align: center;
   }
-  .quote-band .qmark {
-    font-family: 'Fraunces', Georgia, serif;
-    font-variation-settings: 'opsz' 144;
-    font-weight: 400;
-    font-size: 96px;
-    color: var(--accent);
-    line-height: 0.5;
-    margin-bottom: 30px;
-  }
-  .quote-band blockquote {
-    font-family: 'Fraunces', Georgia, serif;
-    font-variation-settings: 'opsz' 96;
-    font-weight: 400;
-    font-size: clamp(28px, 3.6vw, 42px);
-    line-height: 1.22;
-    letter-spacing: -0.012em;
-    color: var(--ink);
-  }
-  .quote-band blockquote em {
-    font-style: italic;
-    color: var(--accent);
-  }
-  .quote-band .attr {
+  .nl-inner .h2 { margin-top: 14px; }
+  .nl-inner .lede { margin-top: 22px; max-width: 600px; margin-left: auto; margin-right: auto; }
+  .nl-form {
     margin-top: 36px;
-    font-size: 14px;
+    display: flex;
+    gap: 12px;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .nl-form input {
+    flex: 1;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: 14px 22px;
+    font-family: inherit;
+    font-size: 16px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color .18s;
+  }
+  .nl-form input:focus { border-color: var(--ink); }
+  .nl-form button { white-space: nowrap; }
+  .nl-meta {
+    margin-top: 16px;
+    font-size: 13px;
     color: var(--ink-3);
     letter-spacing: 0.04em;
-  }
-  .quote-band .attr strong {
-    color: var(--ink);
-    font-weight: 600;
   }
 
   /* ============ CONTACT ============ */
   section.contact {
-    padding: 140px 0;
-    background: var(--paper-2);
+    padding: 130px 0;
     border-bottom: 1px solid var(--rule);
   }
   .contact-inner {
@@ -600,12 +1050,11 @@
     color: var(--accent);
     border-bottom: 1px solid var(--accent);
   }
-
   form.contact-form {
     display: flex;
     flex-direction: column;
     gap: 18px;
-    background: var(--paper);
+    background: var(--paper-2);
     padding: 40px;
     border-radius: 6px;
     border: 1px solid var(--rule);
@@ -631,9 +1080,7 @@
     transition: border-color .18s;
   }
   .field input:focus,
-  .field textarea:focus {
-    border-color: var(--ink);
-  }
+  .field textarea:focus { border-color: var(--ink); }
   .field textarea {
     min-height: 100px;
     resize: vertical;
@@ -671,33 +1118,55 @@
   }
 
   /* ============ RESPONSIVE ============ */
-  @media (max-width: 900px) {
+  @media (max-width: 980px) {
     body { font-size: 16px; }
     .nav-inner { padding: 14px 20px; }
-    .nav-links { gap: 18px; }
+    .nav-links { gap: 16px; }
     .nav-links a:not(.nav-book) { display: none; }
-    .hero { padding: 60px 0 80px; }
+    .hero { padding: 60px 0 70px; }
     .hero-grid { grid-template-columns: 1fr; gap: 50px; padding: 0 22px; }
     .hero h1.display { font-size: 44px; }
+    .stats-inner { grid-template-columns: 1fr 1fr; gap: 28px; padding: 0 22px; }
+    .stat .num { font-size: 48px; }
     .ventures-strip-inner { padding: 0 22px; gap: 24px; }
     .ventures-strip .logos { gap: 22px; justify-content: flex-start; }
     .ventures-strip .vlogo { font-size: 16px; }
     .story-inner { grid-template-columns: 1fr; gap: 40px; padding: 0 22px; }
     .story-aside { position: static; }
     .story-pullquote { font-size: 22px; margin: 30px 0; padding-left: 18px; }
-    .frameworks-header, .framework-list { padding: 0 22px; }
+    .gallery-header, .frameworks-header, .timeline-header, .talks-header, .testimonials-header { padding: 0 22px; }
+    .gallery-header { grid-template-columns: 1fr; align-items: start; }
+    .gallery-header .meta { text-align: left; }
+    .gallery-grid { padding: 0 22px; grid-template-columns: 1fr; grid-auto-rows: 280px; }
+    .tile.t1, .tile.t2, .tile.t3, .tile.t4, .tile.t5 { grid-column: span 1; grid-row: span 1; }
     .framework { grid-template-columns: 60px 1fr; gap: 24px; padding: 28px 0; }
     .framework .num { font-size: 36px; }
+    .framework-list { padding: 0 22px; }
+    .timeline-list { padding: 0 22px; }
+    .tl-item { grid-template-columns: 80px 1fr; gap: 22px; padding: 24px 0; }
+    .tl-year { font-size: 22px; }
+    .ventures-header { grid-template-columns: 1fr; gap: 30px; padding: 0 22px; }
+    .ventures-grid { grid-template-columns: 1fr; padding: 0 22px; }
     .book-inner { grid-template-columns: 1fr; gap: 40px; padding: 0 22px; }
     .book-cover { padding: 36px 28px; }
     .book-cover .title { font-size: 42px; }
     .mentorship-inner { padding: 0 22px; }
     .mentorship-grid { grid-template-columns: 1fr; gap: 30px; margin-top: 50px; }
-    .quote-band-inner { padding: 0 22px; }
+    .talks-header { grid-template-columns: 1fr; gap: 30px; }
+    .talks-grid { grid-template-columns: 1fr; gap: 50px; padding: 0 22px; }
+    .talks-list li { grid-template-columns: 60px 1fr 20px; gap: 12px; }
+    .reading-inner { grid-template-columns: 1fr; gap: 40px; padding: 0 22px; }
+    .reading-list li { grid-template-columns: 1fr; gap: 8px; }
+    .reading-list .why { text-align: left; max-width: none; }
+    .testimonials-grid { grid-template-columns: 1fr; padding: 0 22px; }
+    .testi { padding: 32px 26px; }
+    .testi blockquote { font-size: 19px; }
+    .nl-inner { padding: 0 22px; }
+    .nl-form { flex-direction: column; }
     .contact-inner { grid-template-columns: 1fr; gap: 40px; padding: 0 22px; }
     form.contact-form { padding: 28px; }
-    section.story, section.book, section.mentorship, section.contact, section.quote-band { padding: 80px 0; }
-    section.frameworks { padding: 80px 0 90px; }
+    section.story, section.book, section.mentorship, section.contact, section.gallery, section.frameworks, section.timeline, section.ventures, section.talks, section.reading, section.testimonials { padding: 80px 0; }
+    section.newsletter { padding: 70px 0; }
   }
 </style>
 </head>
@@ -708,8 +1177,9 @@
   <div class="nav-inner">
     <a href="#" class="brand">AIMAN<span class="dot"></span>EL-RAMLY</a>
     <div class="nav-links">
-      <a href="#story">The Long Game</a>
+      <a href="#story">Story</a>
       <a href="#frameworks">Frameworks</a>
+      <a href="#ventures">Ventures</a>
       <a href="#mentorship">Mentorship</a>
       <a href="#contact">Contact</a>
       <a href="#book" class="nav-book">The Book →</a>
@@ -730,6 +1200,28 @@
       </div>
     </div>
     <div class="hero-photo" aria-hidden="true"></div>
+  </div>
+</section>
+
+<!-- ============ STATS BAND ============ -->
+<section class="stats-band">
+  <div class="stats-inner">
+    <div class="stat">
+      <div class="num">40<em>+</em></div>
+      <div class="label">Years Building</div>
+    </div>
+    <div class="stat">
+      <div class="num">7</div>
+      <div class="label">Ventures Founded</div>
+    </div>
+    <div class="stat">
+      <div class="num">120<em>+</em></div>
+      <div class="label">Founders Mentored</div>
+    </div>
+    <div class="stat">
+      <div class="num">1</div>
+      <div class="label">Operating Philosophy</div>
+    </div>
   </div>
 </section>
 
@@ -768,6 +1260,24 @@
         <span class="smallcaps">Vancouver, BC</span>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<section class="gallery">
+  <div class="gallery-header">
+    <div>
+      <div class="eyebrow">In the field</div>
+      <h2 class="h2">A working life, in <em>five frames.</em></h2>
+    </div>
+    <div class="meta">Construction sites, boardrooms, parks, and the occasional skate park. Vancouver to Toronto and back.</div>
+  </div>
+  <div class="gallery-grid">
+    <div class="tile t1" data-cap="On a clear day in Steveston"></div>
+    <div class="tile t2" data-cap="A site walk in North Vancouver"></div>
+    <div class="tile t3" data-cap="Off the clock"></div>
+    <div class="tile t4" data-cap="Quiet between meetings"></div>
+    <div class="tile t5" data-cap="A point of view"></div>
   </div>
 </section>
 
@@ -810,6 +1320,142 @@
   </div>
 </section>
 
+<!-- ============ TIMELINE ============ -->
+<section class="timeline">
+  <div class="timeline-header">
+    <div class="eyebrow">Career Arc</div>
+    <h2 class="h2">Forty years, in <em>milestones.</em></h2>
+    <p class="lede">A condensed timeline. The companies, the bets, the lessons that shaped the next decade.</p>
+  </div>
+  <div class="timeline-list">
+    <div class="tl-item">
+      <div class="tl-year">1985</div>
+      <div class="tl-content">
+        <h4>Founded Aiman El-Ramly Promotional Group</h4>
+        <p>Started in promotional marketing in Vancouver. The first venture. The first proof that building beats waiting.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1990s</div>
+      <div class="tl-content">
+        <h4>Scaled into creative and brand work</h4>
+        <p>Founded AE Creative. Worked across hospitality, retail, and civic clients. Learned the difference between making things look good and making things actually work.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2000s</div>
+      <div class="tl-content">
+        <h4>Crossed into construction and engineering</h4>
+        <p>Operating partner on infrastructure projects. Hard hats and balance sheets. The decade that shaped the operating mindset that still governs everything.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2015</div>
+      <div class="tl-content">
+        <h4>Founded ZECO Engineering</h4>
+        <p>Industrial engineering for the next generation of infrastructure. The marriage of construction discipline and modern engineering.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2018</div>
+      <div class="tl-content">
+        <h4>FourGO and the travel platform years</h4>
+        <p>Built and ran a travel discovery platform for the Pacific Northwest. The lesson: distribution is everything, and channels compound when you stop chasing tactics.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2022</div>
+      <div class="tl-content">
+        <h4>Founded OmniGTM.ai and Nexsun.ai</h4>
+        <p>Two AI ventures. One for go-to-market intelligence. One for marketing automation. The frameworks of forty years, encoded into software.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2025</div>
+      <div class="tl-content">
+        <h4>Real Success Machine and the mentorship cohort</h4>
+        <p>The platform for the philosophy. Events, content, mentorship for founders past product-market fit. The work I should have been doing for the last decade.</p>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2026</div>
+      <div class="tl-content">
+        <h4>Rule Number One</h4>
+        <p>The book. Forty years condensed into one operating principle. Available this year.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VENTURES (rich grid) ============ -->
+<section class="ventures" id="ventures">
+  <div class="ventures-header">
+    <div>
+      <div class="eyebrow">The Portfolio</div>
+      <h2 class="h2">Seven ventures, <em>one operator.</em></h2>
+    </div>
+    <p class="lede">The companies built between 1985 and now. Some sold, some still running, all built on the same operating philosophy.</p>
+  </div>
+  <div class="ventures-grid">
+    <div class="vcard">
+      <div>
+        <div class="vname">AE<em>RPG</em></div>
+        <div class="vcat">Promotional Marketing</div>
+        <div class="vdesc">The first venture. Promotional and marketing solutions for hospitality, retail, and civic clients across Western Canada.</div>
+      </div>
+      <div class="vmeta"><span>Founded 1985</span><span class="live">Operating</span></div>
+    </div>
+    <div class="vcard">
+      <div>
+        <div class="vname">AE <em>Creative</em></div>
+        <div class="vcat">Brand & Design</div>
+        <div class="vdesc">Creative studio. Distinctive identity work and brand experiences for operators who care about how a thing actually looks.</div>
+      </div>
+      <div class="vmeta"><span>Founded 1990s</span><span class="live">Operating</span></div>
+    </div>
+    <div class="vcard">
+      <div>
+        <div class="vname">ZECO <em>Engineering</em></div>
+        <div class="vcat">Industrial Engineering</div>
+        <div class="vdesc">Engineering services for the next generation of infrastructure. Where construction discipline meets modern systems.</div>
+      </div>
+      <div class="vmeta"><span>Founded 2015</span><span class="live">Operating</span></div>
+    </div>
+    <div class="vcard">
+      <div>
+        <div class="vname">Four<em>GO</em></div>
+        <div class="vcat">Travel & Discovery</div>
+        <div class="vdesc">Travel and discovery platform for the Pacific Northwest. Built to be useful first, beautiful second, profitable third.</div>
+      </div>
+      <div class="vmeta"><span>Founded 2018</span><span class="live">Operating</span></div>
+    </div>
+    <div class="vcard">
+      <div>
+        <div class="vname">Omni<em>GTM</em>.ai</div>
+        <div class="vcat">AI · Go-to-Market</div>
+        <div class="vdesc">Next-generation AI for go-to-market intelligence. Pipelines, plays, and predictive signals for B2B operators.</div>
+      </div>
+      <div class="vmeta"><span>Founded 2022</span><span class="live">Operating</span></div>
+    </div>
+    <div class="vcard">
+      <div>
+        <div class="vname">Nexsun<em>.ai</em></div>
+        <div class="vcat">AI · Marketing Intelligence</div>
+        <div class="vdesc">Marketing intelligence and automation for ambitious teams. The frameworks of forty years, encoded into software.</div>
+      </div>
+      <div class="vmeta"><span>Founded 2022</span><span class="live">Operating</span></div>
+    </div>
+    <div class="vcard">
+      <div>
+        <div class="vname">Real Success <em>Machine</em></div>
+        <div class="vcat">Mentorship · Media · Events</div>
+        <div class="vdesc">The platform for the philosophy. Events, content, and the mentorship cohort for founders past product-market fit.</div>
+      </div>
+      <div class="vmeta"><span>Founded 2025</span><span class="live">Operating</span></div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ THE BOOK ============ -->
 <section class="book" id="book">
   <div class="book-inner">
@@ -823,6 +1469,19 @@
       <h2 class="h2">One rule, distilled from <em>forty years.</em></h2>
       <p class="lede">A short book with a long memory. Four decades of building condensed into one operating principle and the discipline to live by it. For the operator who is past optimization and ready to commit to a philosophy.</p>
       <a href="#" class="btn btn-primary">Pre-order the book <span class="arrow">→</span></a>
+
+      <div class="toc">
+        <div class="toc-label">Table of Contents</div>
+        <ol>
+          <li>The rule, and why I waited forty years to write it down</li>
+          <li>Compounding as a philosophy, not a finance term</li>
+          <li>How to lead like a dragon and not a peacock</li>
+          <li>Decision infrastructure, or how to stop deciding</li>
+          <li>GTM as architecture, not as a department</li>
+          <li>The relationships that paid for the next twenty years</li>
+          <li>What I would tell my 1985 self</li>
+        </ol>
+      </div>
     </div>
   </div>
 </section>
@@ -837,12 +1496,12 @@
       <div class="item">
         <span class="smallcaps">Who it is for</span>
         <h4>Founders past PMF</h4>
-        <p>You have a working business and you are deciding what to build, hire, kill, or accelerate.</p>
+        <p>You have a working business and you are deciding what to build, hire, kill, or accelerate next quarter.</p>
       </div>
       <div class="item">
         <span class="smallcaps">What we cover</span>
         <h4>GTM, leadership, operating cadence</h4>
-        <p>The four frameworks above, applied to your specific business, every two weeks.</p>
+        <p>The four frameworks above, applied to your specific business, every two weeks for a year.</p>
       </div>
       <div class="item">
         <span class="smallcaps">How it runs</span>
@@ -851,18 +1510,127 @@
       </div>
     </div>
     <div class="mentorship-cta">
-      <a href="#contact" class="btn btn-primary">Apply <span class="arrow">→</span></a>
-      <span class="meta">Limited cohort. Apply with a one-paragraph note.</span>
+      <a href="#contact" class="btn btn-accent">Apply <span class="arrow">→</span></a>
+      <span class="meta">Limited cohort. Apply with a one-paragraph note about what you are building.</span>
     </div>
   </div>
 </section>
 
-<!-- ============ PULL QUOTE ============ -->
-<section class="quote-band">
-  <div class="quote-band-inner">
-    <div class="qmark">"</div>
-    <blockquote>Aiman builds people the way he builds companies. <em>With patience, conviction, and a refusal to skip steps.</em></blockquote>
-    <div class="attr"><strong>A Friend of Forty Years</strong> · Founder, Pacific Coast Ventures</div>
+<!-- ============ TALKS & WRITING ============ -->
+<section class="talks">
+  <div class="talks-header">
+    <div>
+      <div class="eyebrow">Talks & Writing</div>
+      <h2 class="h2">Where the work gets <em>shared.</em></h2>
+    </div>
+    <p class="lede">Selected talks, podcast appearances, and essays. The full archive lives in the newsletter.</p>
+  </div>
+  <div class="talks-grid">
+    <div class="talks-col">
+      <h3>On the stage</h3>
+      <ul class="talks-list">
+        <li><span class="y">2026</span><span class="t">Compounding for Operators<span class="where">SaaStock Vancouver, keynote</span></span><span class="arr">→</span></li>
+        <li><span class="y">2026</span><span class="t">Decision Infrastructure for AI Companies<span class="where">Web Summit Lisbon, panel</span></span><span class="arr">→</span></li>
+        <li><span class="y">2025</span><span class="t">The Operator's Edge in the AI Era<span class="where">BC Tech Summit, fireside</span></span><span class="arr">→</span></li>
+        <li><span class="y">2025</span><span class="t">Building Through Cycles<span class="where">Founders & Funders Mixer, talk</span></span><span class="arr">→</span></li>
+      </ul>
+    </div>
+    <div class="talks-col">
+      <h3>In the feed</h3>
+      <ul class="talks-list">
+        <li><span class="y">2026</span><span class="t">On The Operator's Notebook<span class="where">Podcast, season three</span></span><span class="arr">→</span></li>
+        <li><span class="y">2025</span><span class="t">Forty years building, in conversation<span class="where">The Long Game podcast</span></span><span class="arr">→</span></li>
+        <li><span class="y">2025</span><span class="t">Why I Wrote Rule Number One<span class="where">Essay, Real Success Machine</span></span><span class="arr">→</span></li>
+        <li><span class="y">2024</span><span class="t">Dragon Leadership in Practice<span class="where">Three-part essay series</span></span><span class="arr">→</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ READING LIST ============ -->
+<section class="reading">
+  <div class="reading-inner">
+    <div>
+      <div class="eyebrow">Reading List</div>
+      <h2 class="h2">What I point people <em>toward.</em></h2>
+      <p class="lede">A short list of books I keep buying for founders. Not the trendy ones. The ones that actually held up.</p>
+    </div>
+    <ul class="reading-list">
+      <li>
+        <div>
+          <div class="book-title">The Effective Executive<span class="author">Peter Drucker</span></div>
+        </div>
+        <div class="why">The original operator's handbook. Read it once a year for the rest of your career.</div>
+      </li>
+      <li>
+        <div>
+          <div class="book-title">Good to Great<span class="author">Jim Collins</span></div>
+        </div>
+        <div class="why">Less famous than its title would suggest. The chapter on the flywheel alone earns the book.</div>
+      </li>
+      <li>
+        <div>
+          <div class="book-title">The Hard Thing About Hard Things<span class="author">Ben Horowitz</span></div>
+        </div>
+        <div class="why">When the deck does not match the reality, this is the book.</div>
+      </li>
+      <li>
+        <div>
+          <div class="book-title">High Output Management<span class="author">Andrew Grove</span></div>
+        </div>
+        <div class="why">The clearest writing on operating cadence ever written. Still unmatched.</div>
+      </li>
+      <li>
+        <div>
+          <div class="book-title">Letters from a Stoic<span class="author">Seneca</span></div>
+        </div>
+        <div class="why">Two thousand years old and still the best writing on composure I have ever read.</div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="testimonials">
+  <div class="testimonials-header">
+    <div class="eyebrow">In Other Words</div>
+    <h2 class="h2">What founders and friends <em>actually say.</em></h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testi">
+      <div class="qmark">"</div>
+      <blockquote>Aiman builds people the way he builds companies. <em>With patience, conviction, and a refusal to skip steps.</em></blockquote>
+      <div class="attr"><strong>A Friend of Forty Years</strong> · Founder, Pacific Coast Ventures</div>
+    </div>
+    <div class="testi">
+      <div class="qmark">"</div>
+      <blockquote>Most mentors give you frameworks. Aiman gives you <em>the operating system underneath the frameworks.</em> It is the difference between renting and owning.</blockquote>
+      <div class="attr"><strong>SaaS Founder</strong> · Mentorship Cohort, 2025</div>
+    </div>
+    <div class="testi">
+      <div class="qmark">"</div>
+      <blockquote>I have hired consultants who cost ten times more and delivered a tenth as much. Aiman is in a category of one. <em>The work compounds.</em></blockquote>
+      <div class="attr"><strong>CEO, AI Infrastructure Co.</strong> · Vancouver</div>
+    </div>
+    <div class="testi">
+      <div class="qmark">"</div>
+      <blockquote>You walk in with a business problem. You walk out with <em>a sharper mind and a longer view.</em> Then you go back and ship.</blockquote>
+      <div class="attr"><strong>Repeat Founder</strong> · Toronto</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NEWSLETTER ============ -->
+<section class="newsletter">
+  <div class="nl-inner">
+    <div class="eyebrow">The Notebook</div>
+    <h2 class="h2">Field notes from <em>forty years on offence.</em></h2>
+    <p class="lede">Short letters on operating, leadership, and the long game. Once a week. No threads, no funnels, no tricks.</p>
+    <form class="nl-form" onsubmit="event.preventDefault(); this.reset(); alert('Thank you. The next letter goes out Sunday.');">
+      <input type="email" placeholder="Your email" required>
+      <button type="submit" class="btn btn-primary">Subscribe <span class="arrow">→</span></button>
+    </form>
+    <p class="nl-meta">Free. Unsubscribe whenever. Read by founders, operators, and a few honest skeptics.</p>
   </div>
 </section>
 
