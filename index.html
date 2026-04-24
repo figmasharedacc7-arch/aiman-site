@@ -18,8 +18,12 @@
     --ink-3: #8A7A5E;
     --rust: #B8431F;
     --rust-deep: #8E2F12;
+    --peach: #E27440;
     --mustard: #D89A2E;
     --mustard-soft: #E5B95C;
+    --cream: #F0DFA8;
+    --teal: #2F8C8C;
+    --teal-deep: #1F6B6B;
     --olive: #5A6238;
     --olive-deep: #3F4626;
     --plum: #6E2C2A;
@@ -27,6 +31,57 @@
     --rule-soft: rgba(31,24,18,0.10);
     --shadow: 0 28px 56px -22px rgba(31,24,18,0.32);
   }
+
+  /* ========== 70s STRIPE MOTIFS ========== */
+  /* Flat 5-stripe horizontal divider band */
+  .stripe-band {
+    height: 28px;
+    width: 100%;
+    background:
+      linear-gradient(to bottom,
+        var(--rust) 0% 20%,
+        var(--peach) 20% 40%,
+        var(--mustard) 40% 60%,
+        var(--cream) 60% 80%,
+        var(--teal) 80% 100%);
+    border-top: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+  }
+  .stripe-band-tall {
+    height: 40px;
+  }
+  .stripe-band-tall span {
+    display: none;
+  }
+
+  /* Vertical stripe band */
+  .stripe-band-vert {
+    width: 28px;
+    height: 100%;
+    background:
+      linear-gradient(to right,
+        var(--rust) 0% 20%,
+        var(--peach) 20% 40%,
+        var(--mustard) 40% 60%,
+        var(--cream) 60% 80%,
+        var(--teal) 80% 100%);
+  }
+
+  /* Curving "L-bend" stripes (the famous 70s shape) */
+  .stripe-curve {
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .stripe-curve svg { width: 100%; height: 100%; display: block; }
+
+  /* Concentric arch (rainbow over a point) */
+  .stripe-arch {
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .stripe-arch svg { width: 100%; height: 100%; display: block; }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
@@ -267,16 +322,28 @@
     overflow: hidden;
     border-bottom: 2px solid var(--ink);
   }
-  .hero-sun {
+  .hero-stripes {
     position: absolute;
-    right: -200px;
-    top: -200px;
-    width: 700px;
-    height: 700px;
+    right: -120px;
+    top: -40px;
+    width: 60%;
+    height: 760px;
     z-index: 0;
-    opacity: 0.45;
+    opacity: 0.85;
+    pointer-events: none;
   }
-  .hero-sun svg { width: 100%; height: 100%; display: block; }
+  .hero-stripes svg { width: 100%; height: 100%; display: block; }
+  .hero-stripes-bottom {
+    position: absolute;
+    left: -60px;
+    bottom: -80px;
+    width: 50%;
+    height: 240px;
+    z-index: 0;
+    opacity: 0.65;
+    pointer-events: none;
+  }
+  .hero-stripes-bottom svg { width: 100%; height: 100%; display: block; }
   .hero-grid {
     position: relative;
     z-index: 2;
@@ -459,16 +526,14 @@
   }
   .story-deco {
     position: absolute;
-    left: -40px;
-    top: 80px;
-    width: 200px;
-    height: 100px;
-    border-top-left-radius: 200px;
-    border-top-right-radius: 200px;
-    background: var(--mustard);
-    opacity: 0.4;
+    left: -80px;
+    top: 60px;
+    width: 360px;
+    height: 220px;
     z-index: 0;
+    opacity: 0.55;
   }
+  .story-deco svg { width: 100%; height: 100%; display: block; }
   .story-inner {
     position: relative;
     z-index: 2;
@@ -783,15 +848,17 @@
     position: relative;
     overflow: hidden;
   }
-  .book-sun {
+  .book-stripes {
     position: absolute;
-    left: -150px;
-    bottom: -150px;
-    width: 500px;
-    height: 500px;
-    opacity: 0.5;
+    right: -60px;
+    bottom: -40px;
+    width: 50%;
+    height: 360px;
+    opacity: 0.65;
     z-index: 0;
+    pointer-events: none;
   }
+  .book-stripes svg { width: 100%; height: 100%; display: block; }
   .book-inner {
     position: relative;
     z-index: 2;
@@ -1394,27 +1461,27 @@
 
 <!-- ============ HERO ============ -->
 <section class="hero">
-  <div class="hero-sun" aria-hidden="true">
-    <svg viewBox="0 0 200 200" fill="none">
-      <circle cx="100" cy="100" r="40" fill="#D89A2E"/>
-      <g stroke="#B8431F" stroke-width="3" stroke-linecap="round">
-        <line x1="100" y1="10" x2="100" y2="40"/>
-        <line x1="100" y1="160" x2="100" y2="190"/>
-        <line x1="10" y1="100" x2="40" y2="100"/>
-        <line x1="160" y1="100" x2="190" y2="100"/>
-        <line x1="34" y1="34" x2="55" y2="55"/>
-        <line x1="145" y1="145" x2="166" y2="166"/>
-        <line x1="166" y1="34" x2="145" y2="55"/>
-        <line x1="55" y1="145" x2="34" y2="166"/>
-        <line x1="100" y1="20" x2="100" y2="35" stroke-dasharray="2 4"/>
-        <line x1="70" y1="22" x2="78" y2="42"/>
-        <line x1="130" y1="22" x2="122" y2="42"/>
-        <line x1="22" y1="70" x2="42" y2="78"/>
-        <line x1="178" y1="70" x2="158" y2="78"/>
-        <line x1="22" y1="130" x2="42" y2="122"/>
-        <line x1="178" y1="130" x2="158" y2="122"/>
-        <line x1="70" y1="178" x2="78" y2="158"/>
-        <line x1="130" y1="178" x2="122" y2="158"/>
+  <!-- Classic 70s flowing stripes from upper-right, bending down -->
+  <div class="hero-stripes" aria-hidden="true">
+    <svg viewBox="0 0 800 760" preserveAspectRatio="none">
+      <g fill="none" stroke-linecap="round">
+        <path d="M 820 60  C 600 60, 420 60, 320 200 L 320 800" stroke="#B8431F" stroke-width="48"/>
+        <path d="M 820 110 C 600 110, 440 110, 360 240 L 360 800" stroke="#E27440" stroke-width="44"/>
+        <path d="M 820 158 C 600 158, 460 158, 400 280 L 400 800" stroke="#D89A2E" stroke-width="42"/>
+        <path d="M 820 204 C 600 204, 480 204, 440 320 L 440 800" stroke="#F0DFA8" stroke-width="40"/>
+        <path d="M 820 248 C 600 248, 500 248, 480 360 L 480 800" stroke="#2F8C8C" stroke-width="38"/>
+      </g>
+    </svg>
+  </div>
+  <!-- Smaller bottom-left stripes for visual balance -->
+  <div class="hero-stripes-bottom" aria-hidden="true">
+    <svg viewBox="0 0 600 240" preserveAspectRatio="none">
+      <g fill="none" stroke-linecap="round">
+        <path d="M -30 220 C 120 220, 220 220, 280 120 L 620 120" stroke="#2F8C8C" stroke-width="30"/>
+        <path d="M -30 188 C 120 188, 240 188, 296 88  L 620 88"  stroke="#F0DFA8" stroke-width="28"/>
+        <path d="M -30 158 C 120 158, 260 158, 312 60  L 620 60"  stroke="#D89A2E" stroke-width="26"/>
+        <path d="M -30 130 C 120 130, 280 130, 326 36  L 620 36"  stroke="#E27440" stroke-width="24"/>
+        <path d="M -30 104 C 120 104, 300 104, 340 14  L 620 14"  stroke="#B8431F" stroke-width="22"/>
       </g>
     </svg>
   </div>
@@ -1435,6 +1502,9 @@
     </div>
   </div>
 </section>
+
+<!-- 70s stripe divider -->
+<div class="stripe-band" aria-hidden="true"></div>
 
 <!-- ============ STATS BAND ============ -->
 <section class="stats-band">
@@ -1476,7 +1546,18 @@
 
 <!-- ============ THE STORY ============ -->
 <section class="story" id="story">
-  <div class="story-deco" aria-hidden="true"></div>
+  <!-- 70s arch / rainbow over-a-point -->
+  <div class="story-deco" aria-hidden="true">
+    <svg viewBox="0 0 360 220">
+      <g fill="none" stroke-linecap="butt">
+        <path d="M -10 220 A 170 170 0 0 1 330 220" stroke="#B8431F" stroke-width="22"/>
+        <path d="M 12  220 A 148 148 0 0 1 308 220" stroke="#E27440" stroke-width="22"/>
+        <path d="M 34  220 A 126 126 0 0 1 286 220" stroke="#D89A2E" stroke-width="22"/>
+        <path d="M 56  220 A 104 104 0 0 1 264 220" stroke="#F0DFA8" stroke-width="22"/>
+        <path d="M 78  220 A 82  82  0 0 1 242 220" stroke="#2F8C8C" stroke-width="22"/>
+      </g>
+    </svg>
+  </div>
   <div class="story-inner">
     <aside class="story-aside">
       <div class="eyebrow"><span class="sep"></span>Chapter One</div>
@@ -1514,6 +1595,9 @@
     <div class="tile t5" data-cap="A point of view"></div>
   </div>
 </section>
+
+<!-- 70s stripe divider -->
+<div class="stripe-band" aria-hidden="true"></div>
 
 <!-- ============ FRAMEWORKS ============ -->
 <section class="frameworks" id="frameworks">
@@ -1621,6 +1705,9 @@
   </div>
 </section>
 
+<!-- 70s stripe divider -->
+<div class="stripe-band" aria-hidden="true"></div>
+
 <!-- ============ VENTURES (rich grid) ============ -->
 <section class="ventures" id="ventures">
   <div class="ventures-header">
@@ -1692,18 +1779,15 @@
 
 <!-- ============ THE BOOK ============ -->
 <section class="book" id="book">
-  <div class="book-sun" aria-hidden="true">
-    <svg viewBox="0 0 200 200" fill="none">
-      <circle cx="100" cy="100" r="50" fill="#B8431F"/>
-      <g stroke="#1F1812" stroke-width="3" stroke-linecap="round">
-        <line x1="100" y1="10" x2="100" y2="40"/>
-        <line x1="100" y1="160" x2="100" y2="190"/>
-        <line x1="10" y1="100" x2="40" y2="100"/>
-        <line x1="160" y1="100" x2="190" y2="100"/>
-        <line x1="34" y1="34" x2="55" y2="55"/>
-        <line x1="145" y1="145" x2="166" y2="166"/>
-        <line x1="166" y1="34" x2="145" y2="55"/>
-        <line x1="55" y1="145" x2="34" y2="166"/>
+  <!-- Book-section stripes coming up from bottom-right -->
+  <div class="book-stripes" aria-hidden="true">
+    <svg viewBox="0 0 600 360" preserveAspectRatio="none">
+      <g fill="none" stroke-linecap="round">
+        <path d="M 620 360 C 460 360, 320 360, 240 240 L -40 240" stroke="#B8431F" stroke-width="32"/>
+        <path d="M 620 320 C 460 320, 340 320, 260 200 L -40 200" stroke="#E27440" stroke-width="30"/>
+        <path d="M 620 282 C 460 282, 360 282, 280 162 L -40 162" stroke="#1F1812" stroke-width="28"/>
+        <path d="M 620 246 C 460 246, 380 246, 300 128 L -40 128" stroke="#F0DFA8" stroke-width="26"/>
+        <path d="M 620 212 C 460 212, 400 212, 320 96  L -40 96"  stroke="#2F8C8C" stroke-width="24"/>
       </g>
     </svg>
   </div>
@@ -1909,6 +1993,9 @@
     </form>
   </div>
 </section>
+
+<!-- 70s stripe divider above footer -->
+<div class="stripe-band" aria-hidden="true"></div>
 
 <!-- ============ FOOTER ============ -->
 <footer>
